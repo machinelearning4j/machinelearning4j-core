@@ -40,7 +40,7 @@ public class UnlabeledTrainingSetBuilder<T> extends AbstractTrainingSetBuilder<T
 	 */
 	public TrainingSet<T> build()
 	{
-		return new TrainingSetImpl<T>(numericFeatureMapper,size);
+		return new TrainingSetImpl<T>(numericFeatureMapper,featureScaler,size);
 	}
 
 	@Override

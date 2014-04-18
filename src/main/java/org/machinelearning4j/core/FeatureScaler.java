@@ -15,33 +15,10 @@
  */
 package org.machinelearning4j.core;
 /**
- * Stores data in memory for training sets consisting of
- * elements of type T
- *  
- *  
+ * Encapsulates logic for scaling features
  * 
  * @author Michael Lavelle
  */
-public interface TrainingSet<T> {
-
-	/**
-	 * @param elements Data elements to add to training set
-	 */
-	void add(Iterable<T> elements);
-	
-	/**
-	 * @return The numeric features for each element of the training set
-	 */
-	double[][] getFeatureMatrix();
-
-
-	/**
-	 * @return An adapter which maps the features of an element of type T to an array of double values
-	 */
-	NumericFeatureMapper<T> getFeatureMapper();
-	
-	boolean isFeatureScalingConfigured();
-	
-	boolean isDataFeatureScaled();
-
+public interface FeatureScaler {
+	// TODO
 }

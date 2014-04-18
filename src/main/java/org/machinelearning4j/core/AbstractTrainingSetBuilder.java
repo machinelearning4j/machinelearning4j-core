@@ -27,6 +27,7 @@ public abstract class AbstractTrainingSetBuilder<T,S extends AbstractTrainingSet
 
 	protected NumericFeatureMapper<T> numericFeatureMapper;
 	protected int size;
+	protected FeatureScaler featureScaler;
 	
 	public AbstractTrainingSetBuilder(int size,boolean addInterceptFeature)
 	{
@@ -44,6 +45,12 @@ public abstract class AbstractTrainingSetBuilder<T,S extends AbstractTrainingSet
 			NumericFeatureDefinition<T> featureDefinition)
 	{
 		numericFeatureMapper.addFeatureDefinition(featureDefinition);
+		return getChainedBuilder();
+	}
+	
+	public S withFeatureScaling(FeatureScaler featureScaler)
+	{
+		this.featureScaler = featureScaler;
 		return getChainedBuilder();
 	}
 	

@@ -28,11 +28,21 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 	private NumericFeatureMapper<T> numericFeatureMapper;
 	private List<double[]> elementFeatures;
 	protected int size;
+	protected boolean dataIsFeatureScaled;
+	protected FeatureScaler featureScaler;
 	
 	public TrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,int size)
 	{
 		this.elementFeatures = new ArrayList<double[]>();
 		this.numericFeatureMapper = numericFeatureMapper;
+		this.size = size;
+	}
+	
+	public TrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,FeatureScaler featureScaler,int size)
+	{
+		this.elementFeatures = new ArrayList<double[]>();
+		this.numericFeatureMapper = numericFeatureMapper;
+		this.featureScaler = featureScaler;
 		this.size = size;
 	}
 	
@@ -71,6 +81,20 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 	@Override
 	public NumericFeatureMapper<T> getFeatureMapper() {
 		return numericFeatureMapper;
+	}
+
+
+
+	@Override
+	public boolean isFeatureScalingConfigured() {
+		return featureScaler != null;
+	}
+
+
+
+	@Override
+	public boolean isDataFeatureScaled() {
+		return dataIsFeatureScaled;
 	}
 
 }

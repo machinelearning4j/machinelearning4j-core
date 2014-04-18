@@ -24,15 +24,27 @@ import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlg
  */
 public class Classifier<T,C> implements LabelPredictor<T,ClassificationProbability<C>> {
 
+	private LabeledTrainingSet<T, C> labeledTrainingSet;
+	
 	public Classifier(
 			LabeledTrainingSet<T, C> labeledTrainingSet,
 			LogisticRegressionAlgorithm logisticRegressionAlgorithm) {
-		// TODO
+			if (!labeledTrainingSet.isFeatureScalingConfigured())
+			{
+				throw new IllegalStateException("Logistic regression algorithm requires " +
+						"that feature scaling is configured for the training set");
+			}
+			this.labeledTrainingSet = labeledTrainingSet;
 	}
 
 	@Override
 	public void train() {
-		// TODO
+		
+		if (!labeledTrainingSet.isDataFeatureScaled())
+		{
+			throw new IllegalStateException("Logistic regression algorithm requires " +
+					"that the data in the training set has been feature scaled");
+		}	
 	}
 
 	@Override

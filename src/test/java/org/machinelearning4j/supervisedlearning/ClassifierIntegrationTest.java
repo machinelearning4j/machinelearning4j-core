@@ -28,6 +28,7 @@ import org.machinelearning4j.algorithms.AlgorithmFactory;
 import org.machinelearning4j.algorithms.DefaultAlgorithmFactory;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
 import org.machinelearning4j.core.Builders;
+import org.machinelearning4j.core.DefaultFeatureScaler;
 import org.machinelearning4j.util.CsvFileClassloaderDataSource;
 import org.machinelearning4j.util.TrainingSetDataSource;
 
@@ -77,6 +78,7 @@ public class ClassifierIntegrationTest {
 		LabeledTrainingSet<Application,AdmissionStatus> labeledTrainingSet = 
 				Builders.createLabeledTrainingSetBuilder(Application.class,AdmissionStatus.class,trainingSetSize)
 				.withFeatureDefinition(new ExamScoresFeatureDefinition())
+				.withFeatureScaling(new DefaultFeatureScaler())
 				.withLabel(new AdmissionStatusLabelDefinition())
 				.build();
 					
