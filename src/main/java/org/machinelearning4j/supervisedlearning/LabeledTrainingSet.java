@@ -15,6 +15,8 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
+import java.util.List;
+
 import org.machinelearning4j.core.TrainingSet;
 
 /**
@@ -26,5 +28,7 @@ import org.machinelearning4j.core.TrainingSet;
  * @author Michael Lavelle
  */
 public interface LabeledTrainingSet<T, L> extends TrainingSet<T>{
-	// TODO
+
+	List<L> getLabels();
+
 }

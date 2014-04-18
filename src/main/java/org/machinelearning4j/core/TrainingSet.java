@@ -28,5 +28,16 @@ public interface TrainingSet<T> {
 	 * @param elements Data elements to add to training set
 	 */
 	void add(Iterable<T> elements);
+	
+	/**
+	 * @return The numeric features for each element of the training set
+	 */
+	double[][] getFeatureMatrix();
+
+
+	/**
+	 * @return An adapter which maps the features of an element of type T to an array of double values
+	 */
+	NumericFeatureMapper<T> getFeatureMapper();
 
 }

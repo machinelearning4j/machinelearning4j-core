@@ -20,5 +20,6 @@ package org.machinelearning4j.supervisedlearning;
  * @author Michael Lavelle
  */
 public interface LabelDefinition<T,L> {
-	// TODO
+	
+	public L getLabel(T element);
 }

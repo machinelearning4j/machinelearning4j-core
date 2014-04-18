@@ -20,5 +20,8 @@ package org.machinelearning4j.core;
  * @author Michael Lavelle
  */
 public interface NumericFeatureDefinition<T> {
-	// TODO
+
+	int getFeatureValueCount();
+
+	double[] getFeatureValues(T element);
 }

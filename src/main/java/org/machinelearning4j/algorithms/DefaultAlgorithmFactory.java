@@ -15,6 +15,9 @@
  */
 package org.machinelearning4j.algorithms;
 
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithmImpl;
+
 
 /**
  * Default algorithm Factory  encapsulating default algorithm creation
@@ -31,8 +34,7 @@ public class DefaultAlgorithmFactory implements AlgorithmFactory {
 	 */
 	@Override
 	public LinearRegressionNormalEquationAlgorithm createLinearRegressionNormalEquationAlgorithm(double regularisationLambda) {
-		// TODO
-		return null;
+		return new LinearRegressionNormalEquationAlgorithmImpl(regularisationLambda);
 	}
 
 }

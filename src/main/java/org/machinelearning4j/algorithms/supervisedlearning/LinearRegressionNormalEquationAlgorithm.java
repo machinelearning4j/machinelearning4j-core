@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.machinelearning4j.algorithms;
+package org.machinelearning4j.algorithms.supervisedlearning;
 /**
  *  A linear regression algorithm using the normal equation
  * 
  * @author Michael Lavelle
  */
-public interface LinearRegressionNormalEquationAlgorithm {
-	// TODO
+public interface LinearRegressionNormalEquationAlgorithm extends RegressionAlgorithm {
 }

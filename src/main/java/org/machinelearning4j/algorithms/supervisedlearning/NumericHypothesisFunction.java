@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.machinelearning4j.supervisedlearning;
+package org.machinelearning4j.algorithms.supervisedlearning;
 
-import org.machinelearning4j.core.SingleNumericValuedFeatureDefinition;
+
 /**
- * Feature definition for the number of square feet of a House
  * 
  * @author Michael Lavelle
+ * 
+ * A NumericHypothesisFunction encapsulates a function h : double[] -> Double so that predict(double[] numericFeatures) is a "good" predictor
+ * given an numeric features array for the corresponding value of a numeric label
  */
-public class SquareFeetFeatureDefinition extends SingleNumericValuedFeatureDefinition<House> {
+public interface NumericHypothesisFunction extends HypothesisFunction<double[],Double>{
 
-	@Override
-	protected double getFeatureValue(House house) {
-		return house.getSquareFeet();
-	}
-
-	
+	public Double predict(double[] numericFeatures);
 }

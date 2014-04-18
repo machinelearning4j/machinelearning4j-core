@@ -24,7 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.machinelearning4j.algorithms.AlgorithmFactory;
 import org.machinelearning4j.algorithms.DefaultAlgorithmFactory;
-import org.machinelearning4j.algorithms.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
 import org.machinelearning4j.core.Builders;
 
 /**
@@ -51,7 +51,7 @@ public class NumericLabelPredictorIntegrationTest {
 		Collection<House> housesCollection = getHouseDataFromFile("ex1data2.txt");
 		this.houses = housesCollection;
 		this.trainingSetSize = housesCollection.size();
-		this.algorithmFactory = new DefaultAlgorithmFactory();
+		this.algorithmFactory = new DefaultAlgorithmFactory();	
 	}
 	
 	@Test
@@ -72,7 +72,7 @@ public class NumericLabelPredictorIntegrationTest {
 		
 		// Create a price (label) predictor for the training set, using this algorithm
 		LabelPredictor<House,Number> pricePredictor = 
-				new NumericLabelPredictor<House>(labeledTrainingSet,linearRegressionAlgorithm);
+				new SingleNumericValueLabelPredictor<House>(labeledTrainingSet,linearRegressionAlgorithm);
 
 		// Add our housing data to the training set
 		labeledTrainingSet.add(houses);

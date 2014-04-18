@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.machinelearning4j.supervisedlearning;
+package org.machinelearning4j.algorithms.supervisedlearning;
 
-import org.machinelearning4j.core.SingleNumericValuedFeatureDefinition;
 /**
- * Feature definition for the number of square feet of a House
+ * 
+ * @param <X> the type of an input data element which contains the set of independent attributes
+ * @param <Y> the type of the dependent output or target data attribute, which this function predicts, given an element of X 
  * 
  * @author Michael Lavelle
+ * 
+ * A HypothesisFunction<X,Y> encapsulates a function h : X -> Y so that predict(X x) is a "good" predictor
+ * given an element of X for the corresponding value of Y
  */
-public class SquareFeetFeatureDefinition extends SingleNumericValuedFeatureDefinition<House> {
+public interface HypothesisFunction<X,Y> {
 
-	@Override
-	protected double getFeatureValue(House house) {
-		return house.getSquareFeet();
-	}
-
-	
+	public Y predict(X x);
 }

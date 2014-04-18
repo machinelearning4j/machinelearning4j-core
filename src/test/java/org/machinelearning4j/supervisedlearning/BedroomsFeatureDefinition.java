@@ -15,13 +15,17 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-import org.machinelearning4j.core.NumericFeatureDefinition;
+import org.machinelearning4j.core.SingleNumericValuedFeatureDefinition;
 
 /**
  * Feature definition for the number of bedrooms of a House
  * 
  * @author Michael Lavelle
  */
-public class BedroomsFeatureDefinition implements NumericFeatureDefinition<House> {
-	// TODO
+public class BedroomsFeatureDefinition extends  SingleNumericValuedFeatureDefinition<House> {
+
+	@Override
+	protected double getFeatureValue(House house) {
+		return house.getBedrooms();
+	}
 }

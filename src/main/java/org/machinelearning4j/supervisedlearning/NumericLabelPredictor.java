@@ -15,7 +15,8 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-import org.machinelearning4j.algorithms.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.NumericHypothesisFunction;
 
 /**
  *  Trainable component which learns to predict numeric labels from elements of type T,
@@ -23,20 +24,24 @@ import org.machinelearning4j.algorithms.LinearRegressionNormalEquationAlgorithm;
  * 
  * @author Michael Lavelle
  */
-public class NumericLabelPredictor<T> implements
+public class NumericLabelPredictor<T,L> implements
 		LabelPredictor<T, Number> {
 
-	@SuppressWarnings("unused")
 	private LinearRegressionNormalEquationAlgorithm linearRegressionAlgorithm;
 	
-	@SuppressWarnings("unused")
-	private LabeledTrainingSet<T, Number> labeledTrainingSet;
-	 
+	private NumericHypothesisFunction hypothesisFunction;
+	
+	private LabeledTrainingSet<T, L> labeledTrainingSet;
+	
+	private NumericLabelMapper<L> labelMapper;
+	
+	
 	public NumericLabelPredictor(
-			LabeledTrainingSet<T, Number> labeledTrainingSet,
+			LabeledTrainingSet<T, L> labeledTrainingSet,NumericLabelMapper<L> labelMapper,
 			LinearRegressionNormalEquationAlgorithm linearRegressionAlgorithm) {
 		this.linearRegressionAlgorithm = linearRegressionAlgorithm;
 		this.labeledTrainingSet = labeledTrainingSet;
+		this.labelMapper = labelMapper;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class NumericLabelPredictor<T> implements
 	 */
 	@Override
 	public void train() {
-		// TODO
+		hypothesisFunction = linearRegressionAlgorithm.train(labeledTrainingSet.getFeatureMatrix(), labelMapper.getLabelValues(labeledTrainingSet.getLabels()));
 	}
 
 	/**
@@ -54,8 +59,7 @@ public class NumericLabelPredictor<T> implements
 	 */
 	@Override
 	public Number predictLabel(T element) {
-		// TODO
-		return null;
+		return linearRegressionAlgorithm.predictLabel(labeledTrainingSet.getFeatureMapper().getFeatureValues(element), hypothesisFunction);
 	}
 
 }

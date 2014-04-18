@@ -21,5 +21,9 @@ package org.machinelearning4j.supervisedlearning;
  * @author Michael Lavelle
  */
 public class PriceLabelDefinition implements LabelDefinition<House,Number> {
-	// TODO
+
+	@Override
+	public Number getLabel(House house) {
+		return house.getPrice();
+	}
 }

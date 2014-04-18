@@ -16,6 +16,7 @@
 package org.machinelearning4j.supervisedlearning;
 
 import org.machinelearning4j.core.NumericFeatureDefinition;
+import org.machinelearning4j.core.NumericFeatureMapper;
 
 /**
  * Encapsulates the building of a LabeledTrainingSet.  To define a training set
@@ -26,6 +27,14 @@ import org.machinelearning4j.core.NumericFeatureDefinition;
  */
 public class LabeledTrainingSetBuilder<T,L> {
 
+	private NumericFeatureMapper<T> numericFeatureMapper;
+	private LabelDefinition<T,L> labelDefinition;
+	
+	public LabeledTrainingSetBuilder()
+	{
+		this.numericFeatureMapper = new NumericFeatureMapper<T>();
+	}
+	
 	/**
 	 * 
 	 * @param featureDefinition Defines a numeric feature of an element of this training set
@@ -35,7 +44,7 @@ public class LabeledTrainingSetBuilder<T,L> {
 	public LabeledTrainingSetBuilder<T,L> withFeatureDefinition(
 			NumericFeatureDefinition<T> featureDefinition)
 	{
-		// TODO
+		numericFeatureMapper.addFeatureDefinition(featureDefinition);
 		return this;
 	}
 
@@ -44,9 +53,9 @@ public class LabeledTrainingSetBuilder<T,L> {
 	 * @return
 	 */
 	public LabeledTrainingSetBuilder<T,L> withLabel(
-			LabelDefinition<T,L> priceLabelDefinition)
+			LabelDefinition<T,L> labelDefinition)
 	{
-		// TODO
+		this.labelDefinition = labelDefinition;
 		return this;
 	}
 
@@ -55,8 +64,7 @@ public class LabeledTrainingSetBuilder<T,L> {
 	 */
 	public LabeledTrainingSet<T,L> build()
 	{
-		// TODO
-		return new LabeledTrainingSetImpl<T,L>();
+		return new LabeledTrainingSetImpl<T,L>(numericFeatureMapper,labelDefinition);
 	}
 
 }

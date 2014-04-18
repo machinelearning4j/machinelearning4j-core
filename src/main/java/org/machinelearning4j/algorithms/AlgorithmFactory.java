@@ -15,9 +15,11 @@
  */
 package org.machinelearning4j.algorithms;
 
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+
 
 /**
- * Factory to allow stateless machine learning algorithm creation to be encapsulated
+ * Factory to allow machine learning algorithm creation to be encapsulated
  * within a central component
  * 
  * @author Michael Lavelle
