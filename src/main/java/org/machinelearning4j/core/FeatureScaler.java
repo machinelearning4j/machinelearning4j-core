@@ -15,10 +15,11 @@
  */
 package org.machinelearning4j.core;
 /**
- * Encapsulates logic for scaling features
+ * Encapsulates logic for scaling training set features
  * 
  * @author Michael Lavelle
  */
 public interface FeatureScaler {
-	// TODO
+
+	double[] scaleFeatures(TrainingSet<?> parentTrainingSet,double[] elementFeatureArrayToScale,boolean firstFeatureIsIntercept);
 }

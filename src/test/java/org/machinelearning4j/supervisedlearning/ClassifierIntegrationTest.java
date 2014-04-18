@@ -89,7 +89,7 @@ public class ClassifierIntegrationTest {
 		
 		// Create an admission status (classification label) predictor for the training set, using this algorithm
 		LabelPredictor<Application,ClassificationProbability<AdmissionStatus>> admissionStatusPredictor = 
-				new Classifier<Application,AdmissionStatus>(labeledTrainingSet,logisticRegressionAlgorithm);
+				new BinaryClassifier<Application,AdmissionStatus>(labeledTrainingSet,logisticRegressionAlgorithm,new AdmissionStatusLabelMapper(),AdmissionStatus.NOT_ACCEPTED,AdmissionStatus.ACCEPTED);
 
 		// Add our previous applications data to the training set
 		labeledTrainingSet.add(previousApplications);
@@ -109,7 +109,7 @@ public class ClassifierIntegrationTest {
 		// Assert that the confidence level we have in the prediction matches the same
 		// probability as predicted by the Octave programming assigment from Stanford's Machine Learning course
 		BigDecimal classificationProbabiliyValue = new BigDecimal(predicitedAdmissionStatus.getProbability(),new MathContext(3));
-		Assert.assertEquals("0.776",classificationProbabiliyValue);
+		Assert.assertEquals("0.776",classificationProbabiliyValue.toString());
 
 	}
 	

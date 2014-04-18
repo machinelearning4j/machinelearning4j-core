@@ -27,6 +27,7 @@ public class NumericFeatureMapper<T> {
 
 	private List<NumericFeatureDefinition<T>> featureDefinitions;
 	private int featureValueCount=0;
+	private boolean hasInterceptFeature;
 	
 	public NumericFeatureMapper(boolean createInterceptTermFeature)
 	{
@@ -35,9 +36,14 @@ public class NumericFeatureMapper<T> {
 		{
 			this.featureDefinitions.add(new InterceptFeatureDefinition<T>());
 			featureValueCount = 1;
+			this.hasInterceptFeature = true;
 		}
 	}
 	
+	public boolean isHasInterceptFeature() {
+		return hasInterceptFeature;
+	}
+
 	public void addFeatureDefinition(NumericFeatureDefinition<T> featureDefinition)
 	{
 		featureDefinitions.add(featureDefinition);

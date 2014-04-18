@@ -17,10 +17,33 @@ package org.machinelearning4j.core;
 /**
  * Encapsulates logic for scaling training set features
  * This default implementation scales each feature by subtracting the mean of the
- * feature for the training set and divides by the standard devation for that feature.
+ * feature for the training set and divides by the standard deviation for that feature.
  * 
  * @author Michael Lavelle
  */
 public class DefaultFeatureScaler implements FeatureScaler {
-	// TODO
+
+	@Override
+	public double[] scaleFeatures(TrainingSet<?> parentTrainingSet,
+			double[] elementFeatureArrayToScale,boolean firstFeatureIsIntercept) {
+		
+		int nonInterceptStatisticsIndex = firstFeatureIsIntercept ? 0 : 1;
+		for (int i = 0 ; i < elementFeatureArrayToScale.length; i++)
+		{	
+			if ((firstFeatureIsIntercept && i != 0) || !firstFeatureIsIntercept)
+			{
+				Statistics statistics = parentTrainingSet.getFeatureStatistics()[nonInterceptStatisticsIndex - 1];
+				elementFeatureArrayToScale[i] = scaleFeatureValue(elementFeatureArrayToScale[i],statistics);
+			}
+			nonInterceptStatisticsIndex++;
+		}
+	
+		return elementFeatureArrayToScale;
+	}
+
+	private double scaleFeatureValue(double featureValue, Statistics featureStatistics) {
+		double featureMean = featureStatistics.getMean();
+		double stdDev = featureStatistics.getStdDev();
+		return (featureValue - featureMean)/stdDev;
+	}
 }

@@ -22,26 +22,27 @@ package org.machinelearning4j.algorithms.supervisedlearning;
  * A NumericHypothesisFunction encapsulates a function h : double[] -> Double so that predict(double[] numericFeatures) is a "good" predictor
  * given an numeric features array for the corresponding value of a numeric label.
  * 
- * This LinearRegressionHypothesisFunction uses a set of theta weights corresponding
- * to the feature values to predict a value from a linear combination of the weighted values.
+ * This LogisticRegressionHypothesisFunction uses a set of theta weights corresponding
+ * to the feature values to predict a value from a the sigmoid function applied to a linear combination of the weighted values.
  */
-public class LinearRegressionHypothesisFunction implements NumericHypothesisFunction {
+public class LogisticRegressionHypothesisFunction implements NumericHypothesisFunction {
 
 	private double[] thetas;
 
-	public LinearRegressionHypothesisFunction(double[] thetas)
+	public LogisticRegressionHypothesisFunction(double[] thetas)
 	{
 		this.thetas = thetas;
 	}
-	
+
 	@Override
-	public Double predict(double[] numericFeatures) {
+	public Double predict(double[] x) {
 		double y = 0d;
-		for (int index = 0; index < numericFeatures.length; index++)
+		for (int index = 0; index < x.length; index++)
 		{
-			y = y +  thetas[index] * numericFeatures[index];
+			y = y +  thetas[index] * x[index];
+
 		}
+		y =  1d/(1d + Math.exp(-y));
 		return y;
 	}
-
 }

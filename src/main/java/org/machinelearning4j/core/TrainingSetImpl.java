@@ -30,6 +30,7 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 	protected int size;
 	protected boolean dataIsFeatureScaled;
 	protected FeatureScaler featureScaler;
+	protected Statistics[] featureStatistics;
 	
 	public TrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,int size)
 	{
@@ -58,6 +59,14 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 	 */
 	@Override
 	public void add(Iterable<T> elements) {
+		if (dataIsFeatureScaled)
+		{
+			throw new IllegalStateException("Cannot add any more elements to this training set as it has been feature scaled");
+		}
+		if (featureStatistics != null)
+		{
+			throw new IllegalStateException("Cannot add any more elements to this training set as feature statistics have been calculated");
+		}
 		for (T element : elements)
 		{
 			addFeatureValuesForElement(element);
@@ -73,10 +82,39 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 		int elementIndex = 0;
 		for (double[] elementFeatureArray : elementFeatures)
 		{
-			featureMatrix[elementIndex++] = elementFeatureArray;
+			featureMatrix[elementIndex++] = (featureScaler == null || dataIsFeatureScaled) ? elementFeatureArray : featureScaler.scaleFeatures(this,elementFeatureArray,true);
 		}
+		if (featureScaler != null) dataIsFeatureScaled = true;
 		return featureMatrix;
 	}
+	
+	
+	public Statistics[] getFeatureStatistics()
+	{
+		// Lazy evaulate feature statistics
+		if (featureStatistics != null)
+		{
+			return featureStatistics;
+		}
+		else
+		{
+			int startIndex = numericFeatureMapper.isHasInterceptFeature() ? 1 : 0;
+	
+			featureStatistics = new Statistics[elementFeatures.get(0).length - startIndex];
+			for (int featureIndex = startIndex;  featureIndex < (elementFeatures.get(0).length); featureIndex++)
+			{
+				double[] allFeatureValues = new double[elementFeatures.size()];
+				int elementIndex = 0;
+				for (double[] elementFeaturesArray : elementFeatures)
+				{
+					allFeatureValues[elementIndex++] = elementFeaturesArray[featureIndex];
+				}
+				int featInd = numericFeatureMapper.isHasInterceptFeature()  ? (featureIndex - 1) : featureIndex;
+				featureStatistics[featInd] = new Statistics(allFeatureValues);
+			}
+			return featureStatistics;
+		}
+ 	}
 
 	@Override
 	public NumericFeatureMapper<T> getFeatureMapper() {
@@ -95,6 +133,11 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 	@Override
 	public boolean isDataFeatureScaled() {
 		return dataIsFeatureScaled;
+	}
+
+	@Override
+	public FeatureScaler getFeatureScaler() {
+		return featureScaler;
 	}
 
 }

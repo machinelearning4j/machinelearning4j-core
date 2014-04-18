@@ -13,9 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.machinelearning4j.algorithms.supervisedlearning;
+package org.machinelearning4j.supervisedlearning;
+/**
+ * A NumericLabelMapper which converts AdmissionStatus labels to 0 for the AdmissionStatus.NOT_ACCEPTED and 1 for AdmissionStatus_ACCEPTED
+ * 
+ * @author Michael Lavelle
+ */
+public class AdmissionStatusLabelMapper extends
+		BinaryClassificationLabelMapper<AdmissionStatus> {
 
-public interface LogisticRegressionAlgorithm extends RegressionAlgorithm {
+	@Override
+	protected boolean isPositiveClass(AdmissionStatus label) {
+		return label == AdmissionStatus.ACCEPTED;
+	}
 
-	
 }

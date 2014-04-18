@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.machinelearning4j.core;
+
+
 /**
  * Stores data in memory for training sets consisting of
  * elements of type T
@@ -43,5 +45,13 @@ public interface TrainingSet<T> {
 	boolean isFeatureScalingConfigured();
 	
 	boolean isDataFeatureScaled();
+	
+	
+	
+	public FeatureScaler getFeatureScaler();
+		
+	public Statistics[] getFeatureStatistics();
+	
+	
 
 }

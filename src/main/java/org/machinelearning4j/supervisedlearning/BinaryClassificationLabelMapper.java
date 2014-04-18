@@ -15,27 +15,28 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-public class ClassificationProbability<C> {
+import java.util.List;
 
-	private C classification;
-	private double probability;
+/**
+ * A NumericLabelMapper which converts labels of type C to 0 for the negative classification
+ * and 1 for the positive classification
+ * 
+ * @author Michael Lavelle
+ */
+public abstract class BinaryClassificationLabelMapper<C> implements NumericLabelMapper<C> {
+
 	
-	public ClassificationProbability(C classification,double probability)
-	{
-		this.classification = classification;
-		this.probability = probability;
+	@Override
+	public double[] getLabelValues(List<C> labels) {
+		double[] labelValues = new double[labels.size()];
+		int labelValueIndex = 0;
+		for (C label : labels)
+		{
+			labelValues[labelValueIndex++] = isPositiveClass(label) ? 1d : 0d;
+		}
+		return labelValues;
 	}
 	
-	public C getClassification() {
-		return classification;
-	}
-	public void setClassification(C classification) {
-		this.classification = classification;
-	}
-	public double getProbability() {
-		return probability;
-	}
-	public void setProbability(double probability) {
-		this.probability = probability;
-	}
+	protected abstract boolean isPositiveClass(C label);
+
 }
