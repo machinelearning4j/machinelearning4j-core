@@ -15,7 +15,6 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import junit.framework.Assert;
@@ -26,6 +25,8 @@ import org.machinelearning4j.algorithms.AlgorithmFactory;
 import org.machinelearning4j.algorithms.DefaultAlgorithmFactory;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
 import org.machinelearning4j.core.Builders;
+import org.machinelearning4j.util.CsvFileClassloaderDataSource;
+import org.machinelearning4j.util.TrainingSetDataSource;
 
 /**
  * Initial end-to-end integration test for numeric label prediction.
@@ -53,6 +54,11 @@ public class NumericLabelPredictorIntegrationTest {
 		// Assert that we have read the training data correctly
 		Assert.assertNotNull(housesCollection);
 		Assert.assertEquals(47,housesCollection.size());
+		House house1 = housesCollection.iterator().next();
+		Assert.assertEquals(2104, house1.getSquareFeet());
+		Assert.assertEquals(3, house1.getBedrooms());
+		Assert.assertEquals(399900, house1.getPrice());
+				
 		
 		this.houses = housesCollection;
 		this.trainingSetSize = housesCollection.size();
@@ -98,8 +104,8 @@ public class NumericLabelPredictorIntegrationTest {
 	
 	private Collection<House> getHouseDataFromFile(String fileName)
 	{
-		// TODO
-		return new ArrayList<House>();
+		TrainingSetDataSource<House,Collection<House>> houses = new CsvFileClassloaderDataSource<House>(fileName,getClass().getClassLoader(),new HouseCsvDataExtractor());
+		return houses.getData();
 	}
 	
 }
