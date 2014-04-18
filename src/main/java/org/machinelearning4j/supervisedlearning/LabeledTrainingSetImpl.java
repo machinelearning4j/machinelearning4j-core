@@ -19,35 +19,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.machinelearning4j.core.NumericFeatureMapper;
+import org.machinelearning4j.core.TrainingSetImpl;
 
 /**
  * Default implementation of a LabeledTrainingSet
  * 
  * @author Michael Lavelle
  */
-public class LabeledTrainingSetImpl<T,L> implements LabeledTrainingSet<T,L> {
+public class LabeledTrainingSetImpl<T,L>  extends TrainingSetImpl<T> implements LabeledTrainingSet<T,L> {
 
 	private List<L> labels;
 	private LabelDefinition<T,L> labelDefinition;
-	private NumericFeatureMapper<T> numericFeatureMapper;
-	private List<double[]> elementFeatures;
 	
-	public LabeledTrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,LabelDefinition<T,L> labelDefinition)
+	public LabeledTrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,LabelDefinition<T,L> labelDefinition,int size)
 	{
+		super(numericFeatureMapper,size);
 		this.labels = new ArrayList<L>();
-		this.elementFeatures = new ArrayList<double[]>();
 		this.labelDefinition = labelDefinition;
-		this.numericFeatureMapper = numericFeatureMapper;
 	}
 	
 	protected void addLabelForElement(T element)
 	{
 		labels.add(labelDefinition.getLabel(element));
-	}
-	
-	protected void addFeatureValuesForElement(T element)
-	{
-		elementFeatures.add(numericFeatureMapper.getFeatureValues(element));
 	}
 	
 	/**
@@ -60,25 +53,6 @@ public class LabeledTrainingSetImpl<T,L> implements LabeledTrainingSet<T,L> {
 			addFeatureValuesForElement(element);
 			addLabelForElement(element);
 		}
-	}
-
-	@Override
-	public double[][] getFeatureMatrix() {
-		
-		// TODO. Build up feature matrix as elements are added instead of on feature matrix access
-		
-		double[][] featureMatrix = new double[elementFeatures.size()][];
-		int elementIndex = 0;
-		for (double[] elementFeatureArray : elementFeatures)
-		{
-			featureMatrix[elementIndex++] = elementFeatureArray;
-		}
-		return featureMatrix;
-	}
-
-	@Override
-	public NumericFeatureMapper<T> getFeatureMapper() {
-		return numericFeatureMapper;
 	}
 
 	@Override

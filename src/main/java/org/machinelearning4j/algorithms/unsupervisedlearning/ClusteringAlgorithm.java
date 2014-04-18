@@ -15,6 +15,11 @@
  */
 package org.machinelearning4j.algorithms.unsupervisedlearning;
 
+/**
+ * Obtains Centroids given a collection of numeric feature arrays
+ *
+ * @author Michael Lavelle
+ */
 public interface ClusteringAlgorithm {
-
+	// TODO
 }

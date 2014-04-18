@@ -18,8 +18,6 @@ package org.machinelearning4j.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.machinelearning4j.core.NumericFeatureMapper;
-
 /**
  * Default implementation of a TrainingSet
  * 
@@ -29,11 +27,13 @@ public class TrainingSetImpl<T> implements TrainingSet<T> {
 
 	private NumericFeatureMapper<T> numericFeatureMapper;
 	private List<double[]> elementFeatures;
+	protected int size;
 	
-	public TrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper)
+	public TrainingSetImpl(NumericFeatureMapper<T> numericFeatureMapper,int size)
 	{
 		this.elementFeatures = new ArrayList<double[]>();
 		this.numericFeatureMapper = numericFeatureMapper;
+		this.size = size;
 	}
 	
 	

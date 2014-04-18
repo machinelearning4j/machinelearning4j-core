@@ -19,6 +19,11 @@ import java.util.Set;
 
 import org.machinelearning4j.core.TrainingSet;
 
+/**
+ * Obtains Centroids for a training set of elements of type T
+ *
+ * @author Michael Lavelle
+ */
 public class Clusterer<T> {
 
 	@SuppressWarnings("unused")
@@ -33,6 +38,7 @@ public class Clusterer<T> {
 	}
 
 	public Set<Centroid<T>> getCentroids() {
+		// TODO
 		return null;
 	}
 

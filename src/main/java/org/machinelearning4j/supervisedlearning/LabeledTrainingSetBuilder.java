@@ -15,8 +15,7 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-import org.machinelearning4j.core.NumericFeatureDefinition;
-import org.machinelearning4j.core.NumericFeatureMapper;
+import org.machinelearning4j.core.AbstractTrainingSetBuilder;
 
 /**
  * Encapsulates the building of a LabeledTrainingSet.  To define a training set
@@ -25,29 +24,15 @@ import org.machinelearning4j.core.NumericFeatureMapper;
  * 
  * @author Michael Lavelle
  */
-public class LabeledTrainingSetBuilder<T,L> {
+public class LabeledTrainingSetBuilder<T,L> extends AbstractTrainingSetBuilder<T,LabeledTrainingSetBuilder<T,L>> {
 
-	private NumericFeatureMapper<T> numericFeatureMapper;
+	public LabeledTrainingSetBuilder(int size) {
+		super(size,true);
+	}
+
 	private LabelDefinition<T,L> labelDefinition;
 	
-	public LabeledTrainingSetBuilder()
-	{
-		this.numericFeatureMapper = new NumericFeatureMapper<T>(true);
-	}
 	
-	/**
-	 * 
-	 * @param featureDefinition Defines a numeric feature of an element of this training set
-	 * 
-	 * @return the chained builder
-	 */
-	public LabeledTrainingSetBuilder<T,L> withFeatureDefinition(
-			NumericFeatureDefinition<T> featureDefinition)
-	{
-		numericFeatureMapper.addFeatureDefinition(featureDefinition);
-		return this;
-	}
-
 	/**
 	 * @param priceLabelDefinition Defines a label of type T of an element of this training set
 	 * @return
@@ -56,7 +41,7 @@ public class LabeledTrainingSetBuilder<T,L> {
 			LabelDefinition<T,L> labelDefinition)
 	{
 		this.labelDefinition = labelDefinition;
-		return this;
+		return getChainedBuilder();
 	}
 
 	/**
@@ -64,7 +49,12 @@ public class LabeledTrainingSetBuilder<T,L> {
 	 */
 	public LabeledTrainingSet<T,L> build()
 	{
-		return new LabeledTrainingSetImpl<T,L>(numericFeatureMapper,labelDefinition);
+		return new LabeledTrainingSetImpl<T,L>(numericFeatureMapper,labelDefinition,size);
+	}
+
+	@Override
+	protected LabeledTrainingSetBuilder<T, L> getChainedBuilder() {
+		return this;
 	}
 
 }

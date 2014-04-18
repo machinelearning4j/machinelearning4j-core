@@ -15,6 +15,12 @@
  */
 package org.machinelearning4j.algorithms.unsupervisedlearning;
 
+/**
+ * Obtains a specified number of Centroids given a collection of numeric feature arrays
+ * using the KMeans clustering algorithm
+ *
+ * @author Michael Lavelle
+ */
 public class KMeansClusteringAlgorithm implements ClusteringAlgorithm {
 
 	public KMeansClusteringAlgorithm(int numberOfClusters) {

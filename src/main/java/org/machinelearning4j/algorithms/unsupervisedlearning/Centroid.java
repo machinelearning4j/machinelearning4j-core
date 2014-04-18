@@ -15,6 +15,11 @@
  */
 package org.machinelearning4j.algorithms.unsupervisedlearning;
 
+/**
+ * Identifies a cluster centroid for a collection of elements of type T
+ *
+ * @author Michael Lavelle
+ */
 public interface Centroid<T> {
 
 }
