@@ -49,6 +49,11 @@ public class NumericLabelPredictorIntegrationTest {
 		// Read housing data used as part of a programming assignment on
 		// Stanford's Machine Learning course
 		Collection<House> housesCollection = getHouseDataFromFile("ex1data2.txt");
+		
+		// Assert that we have read the training data correctly
+		Assert.assertNotNull(housesCollection);
+		Assert.assertEquals(47,housesCollection.size());
+		
 		this.houses = housesCollection;
 		this.trainingSetSize = housesCollection.size();
 		this.algorithmFactory = new DefaultAlgorithmFactory();	
