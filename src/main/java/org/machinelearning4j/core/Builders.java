@@ -15,6 +15,7 @@
  */
 package org.machinelearning4j.core;
 
+import org.machinelearning4j.core.unsupervisedlearning.UnlabeledTrainingSetBuilder;
 import org.machinelearning4j.supervisedlearning.LabeledTrainingSetBuilder;
 
 /**
@@ -27,6 +28,10 @@ public class Builders {
 	public static <T,L> LabeledTrainingSetBuilder<T,L> createLabeledTrainingSetBuilder(Class<T> elementClass,
 			Class<L> labelClass, int numberOfTrainingExamplesToProcess) {
 		return new LabeledTrainingSetBuilder<T,L>();
+	}
+	
+	public static <T,L> UnlabeledTrainingSetBuilder<T> createUnlabeledTrainingSetBuilder(Class<T> elementClass, int numberOfTrainingExamplesToProcess) {
+		return new UnlabeledTrainingSetBuilder<T>();
 	}
 	
 

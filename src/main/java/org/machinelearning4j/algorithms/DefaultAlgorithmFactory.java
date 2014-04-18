@@ -17,6 +17,7 @@ package org.machinelearning4j.algorithms;
 
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithmImpl;
+import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
 /**
@@ -35,6 +36,12 @@ public class DefaultAlgorithmFactory implements AlgorithmFactory {
 	@Override
 	public LinearRegressionNormalEquationAlgorithm createLinearRegressionNormalEquationAlgorithm(double regularisationLambda) {
 		return new LinearRegressionNormalEquationAlgorithmImpl(regularisationLambda);
+	}
+
+	@Override
+	public KMeansClusteringAlgorithm createKMeansClusteringAlgorithm(
+			int numberOfClusters) {
+		return new KMeansClusteringAlgorithm(numberOfClusters);
 	}
 
 }

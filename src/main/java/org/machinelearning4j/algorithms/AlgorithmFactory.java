@@ -16,6 +16,7 @@
 package org.machinelearning4j.algorithms;
 
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
 /**
@@ -32,4 +33,12 @@ public interface AlgorithmFactory {
 	 * @param regularisationLambda The value of lambda to use for regularisation
 	 */
 	LinearRegressionNormalEquationAlgorithm createLinearRegressionNormalEquationAlgorithm(double regularizationLambda);
+
+	/**
+	 * Create a K-Means clustering algorithm for the required number of clusters
+	 * 
+	 * @param numberOfClusters The required number of clusters
+	 */
+	KMeansClusteringAlgorithm createKMeansClusteringAlgorithm(int numberOfClusters);
+
 }
