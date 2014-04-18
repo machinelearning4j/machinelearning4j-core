@@ -71,7 +71,7 @@ public class LabeledTrainingSetImpl<T,L> implements LabeledTrainingSet<T,L> {
 		int elementIndex = 0;
 		for (double[] elementFeatureArray : elementFeatures)
 		{
-			featureMatrix[elementIndex] = elementFeatureArray;
+			featureMatrix[elementIndex++] = elementFeatureArray;
 		}
 		return featureMatrix;
 	}

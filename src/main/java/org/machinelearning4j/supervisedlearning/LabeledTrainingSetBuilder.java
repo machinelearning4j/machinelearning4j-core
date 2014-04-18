@@ -32,7 +32,7 @@ public class LabeledTrainingSetBuilder<T,L> {
 	
 	public LabeledTrainingSetBuilder()
 	{
-		this.numericFeatureMapper = new NumericFeatureMapper<T>();
+		this.numericFeatureMapper = new NumericFeatureMapper<T>(true);
 	}
 	
 	/**
