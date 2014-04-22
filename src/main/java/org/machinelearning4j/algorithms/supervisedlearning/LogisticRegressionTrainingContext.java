@@ -14,13 +14,33 @@
  * limitations under the License.
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
-
 /**
- *  A logistic regression algorithm
+ *  Training context for a logistic regression algorithm
  * 
  * @author Michael Lavelle
  */
-public interface LogisticRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
+public class LogisticRegressionTrainingContext {
 
+	private double regularizationLambda;
 	
+	private Double learningRateAlpha;
+
+	public double getLearningRateAlpha() {
+		return learningRateAlpha;
+	}
+
+	public void setLearningRateAlpha(Double learningRateAlpha) {
+		this.learningRateAlpha = learningRateAlpha;
+	}
+
+	public double getRegularizationLambda() {
+		return regularizationLambda;
+	}
+
+	public void setRegularizationLambda(Double regularizationLambda) {
+		this.regularizationLambda = regularizationLambda;
+	}
+	
+	
+
 }

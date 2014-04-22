@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.machinelearning4j.algorithms.AlgorithmFactory;
 import org.machinelearning4j.algorithms.DefaultAlgorithmFactory;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionTrainingContext;
 import org.machinelearning4j.core.Builders;
 import org.machinelearning4j.core.DefaultFeatureScaler;
 import org.machinelearning4j.util.CsvFileClassloaderDataSource;
@@ -83,19 +84,23 @@ public class ClassifierIntegrationTest {
 				.build();
 					
 		// Create a logistic regression algorithm that we can use to predict the AdmissionStatus. 
-		// Pass in regularization parameter to be used
-		LogisticRegressionAlgorithm logisticRegressionAlgorithm = 
-				algorithmFactory.createLogisticRegressionAlgorithm(0.0);
+		LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> logisticRegressionAlgorithm = 
+				algorithmFactory.createLogisticRegressionAlgorithm();
 		
 		// Create an admission status (classification label) predictor for the training set, using this algorithm
-		LabelPredictor<Application,ClassificationProbability<AdmissionStatus>> admissionStatusPredictor = 
-				new BinaryClassifier<Application,AdmissionStatus>(labeledTrainingSet,logisticRegressionAlgorithm,new AdmissionStatusLabelMapper(),AdmissionStatus.NOT_ACCEPTED,AdmissionStatus.ACCEPTED);
+		LabelPredictor<Application,ClassificationProbability<AdmissionStatus>,LogisticRegressionTrainingContext> admissionStatusPredictor = 
+				new BinaryClassifier<Application,AdmissionStatus,LogisticRegressionTrainingContext>(labeledTrainingSet,logisticRegressionAlgorithm,new AdmissionStatusLabelMapper(),AdmissionStatus.NOT_ACCEPTED,AdmissionStatus.ACCEPTED);
 
 		// Add our previous applications data to the training set
 		labeledTrainingSet.add(previousApplications);
+		
+		// Create a training context for our chosen algorithm
+		LogisticRegressionTrainingContext trainingContext = new LogisticRegressionTrainingContext();
+		trainingContext.setRegularizationLambda(0d);
+		trainingContext.setLearningRateAlpha(1d);
 
 		// Train the admission status predictor to learn from training set
-		admissionStatusPredictor.train();
+		admissionStatusPredictor.train(trainingContext);
 
 		// Predict a admission status for a specified set of exam scores
 		ClassificationProbability<AdmissionStatus> predicitedAdmissionStatus = admissionStatusPredictor.predictLabel(new Application(new ExamScores(45,85)));

@@ -20,14 +20,14 @@ package org.machinelearning4j.algorithms.supervisedlearning;
  * 
  * @author Michael Lavelle
  */
-public class LogisticRegressionAlgorithmImpl implements LogisticRegressionAlgorithm {
+public class LogisticRegressionAlgorithmImpl implements LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> {
 
-	public LogisticRegressionAlgorithmImpl(double regularizationLambda) {
+	public LogisticRegressionAlgorithmImpl() {
 	}
 
 	@Override
 	public NumericHypothesisFunction train(double[][] featureMatrix,
-			double[] labelVector) {
+			double[] labelVector,LogisticRegressionTrainingContext trainingContext) {
 		// TODO
 		return null;
 	}
@@ -39,4 +39,9 @@ public class LogisticRegressionAlgorithmImpl implements LogisticRegressionAlgori
 		return null;
 	}
 
+	@Override
+	public boolean isFeatureScaledDataRequired() {
+		return true;
 	}
+
+}

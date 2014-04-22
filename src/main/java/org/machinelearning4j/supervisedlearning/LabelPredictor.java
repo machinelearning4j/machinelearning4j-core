@@ -19,12 +19,12 @@ package org.machinelearning4j.supervisedlearning;
  * 
  * @author Michael Lavelle
  */
-public interface LabelPredictor<T, L> {
+public interface LabelPredictor<T, L,C> {
 
 	/**
 	 * Train the label predictor
 	 */
-	void train();
+	void train(C trainingContext);
 
 	/**
 	 * @param The element we wish to predict a label for

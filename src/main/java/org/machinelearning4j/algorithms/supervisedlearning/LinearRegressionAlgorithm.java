@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
-
 /**
- *  A logistic regression algorithm
+ *  A linear regression algorithm using the normal equation
  * 
  * @author Michael Lavelle
  */
-public interface LogisticRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
-
-	
+public interface LinearRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
 }

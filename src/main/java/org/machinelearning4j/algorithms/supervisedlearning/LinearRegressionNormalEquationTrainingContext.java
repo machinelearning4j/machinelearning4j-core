@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
-
 /**
- *  A logistic regression algorithm
+ *  Training context for a linear regression normal equation algorithm
  * 
  * @author Michael Lavelle
  */
-public interface LogisticRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
+public class LinearRegressionNormalEquationTrainingContext  {
 
+	private double regularizationLambda;
+
+	public double getRegularizationLambda() {
+		return regularizationLambda;
+	}
+
+	public void setRegularizationLambda(double regularizationLambda) {
+		this.regularizationLambda = regularizationLambda;
+	}
 	
+	
+
 }

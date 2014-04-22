@@ -30,8 +30,9 @@ package org.machinelearning4j.algorithms.supervisedlearning;
  *  * 
  * 
  */
-public interface RegressionAlgorithm {
+public interface RegressionAlgorithm<C> {
 	
-	public NumericHypothesisFunction train(double[][] featureMatrix,double[] labelVector);
+	public NumericHypothesisFunction train(double[][] featureMatrix,double[] labelVector,C trainingContext);
 	public Double predictLabel(double[] featureVector,NumericHypothesisFunction hypothesisFunction);
+	public boolean isFeatureScaledDataRequired();
 }

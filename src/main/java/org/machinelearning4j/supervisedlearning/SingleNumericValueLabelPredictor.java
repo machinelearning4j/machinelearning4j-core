@@ -1,13 +1,13 @@
 package org.machinelearning4j.supervisedlearning;
 
-import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 
-public class SingleNumericValueLabelPredictor<T> extends
-		NumericLabelPredictor<T, Number> {
+public class SingleNumericValueLabelPredictor<T,C> extends
+		NumericLabelPredictor<T, Number,C> {
 
 	public SingleNumericValueLabelPredictor(
 			LabeledTrainingSet<T, Number> labeledTrainingSet,
-			LinearRegressionNormalEquationAlgorithm linearRegressionAlgorithm) {
+			LinearRegressionAlgorithm<C> linearRegressionAlgorithm) {
 		super(labeledTrainingSet, new SingleNumericValueLabelMapper(), linearRegressionAlgorithm);
 	}
 

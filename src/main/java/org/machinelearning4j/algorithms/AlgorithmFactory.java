@@ -15,8 +15,10 @@
  */
 package org.machinelearning4j.algorithms;
 
-import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionTrainingContext;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -31,9 +33,8 @@ public interface AlgorithmFactory {
 	/**
 	 * Create a linear regression algorithm, using the normal equation strategy
 	 * 
-	 * @param regularisationLambda The value of lambda to use for regularisation
 	 */
-	LinearRegressionNormalEquationAlgorithm createLinearRegressionNormalEquationAlgorithm(double regularizationLambda);
+	<C extends LinearRegressionNormalEquationTrainingContext> LinearRegressionAlgorithm<C> createLinearRegressionNormalEquationAlgorithm();
 
 	/**
 	 * Create a K-Means clustering algorithm for the required number of clusters
@@ -46,6 +47,6 @@ public interface AlgorithmFactory {
 	 * Create a LogisticRegressionAlgorithm
 	 * 
 	 */
-	LogisticRegressionAlgorithm createLogisticRegressionAlgorithm(double regularizationLambda);
+	<C extends LogisticRegressionTrainingContext> LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> createLogisticRegressionAlgorithm();
 
 }

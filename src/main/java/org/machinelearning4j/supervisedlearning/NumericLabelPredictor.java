@@ -15,7 +15,7 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
-import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.NumericHypothesisFunction;
 
 /**
@@ -24,10 +24,10 @@ import org.machinelearning4j.algorithms.supervisedlearning.NumericHypothesisFunc
  * 
  * @author Michael Lavelle
  */
-public class NumericLabelPredictor<T,L> implements
-		LabelPredictor<T, Number> {
+public class NumericLabelPredictor<T,L,C> implements
+		LabelPredictor<T, Number,C> {
 
-	private LinearRegressionNormalEquationAlgorithm linearRegressionAlgorithm;
+	private LinearRegressionAlgorithm<C> linearRegressionAlgorithm;
 	
 	private NumericHypothesisFunction hypothesisFunction;
 	
@@ -38,10 +38,17 @@ public class NumericLabelPredictor<T,L> implements
 	
 	public NumericLabelPredictor(
 			LabeledTrainingSet<T, L> labeledTrainingSet,NumericLabelMapper<L> labelMapper,
-			LinearRegressionNormalEquationAlgorithm linearRegressionAlgorithm) {
+			LinearRegressionAlgorithm<C> linearRegressionAlgorithm) {
 		this.linearRegressionAlgorithm = linearRegressionAlgorithm;
 		this.labeledTrainingSet = labeledTrainingSet;
 		this.labelMapper = labelMapper;
+		
+		if (!labeledTrainingSet.isFeatureScalingConfigured() && linearRegressionAlgorithm.isFeatureScaledDataRequired())
+		{
+			throw new IllegalStateException("This regression algorithm requires " +
+					"that feature scaling is configured for the training set");
+		}
+		
 	}
 
 	/**
@@ -49,8 +56,15 @@ public class NumericLabelPredictor<T,L> implements
 	 * the data within the labeledTrainingSet
 	 */
 	@Override
-	public void train() {
-		hypothesisFunction = linearRegressionAlgorithm.train(labeledTrainingSet.getFeatureMatrix(), labelMapper.getLabelValues(labeledTrainingSet.getLabels()));
+	public void train(C trainingContext) {
+		
+		if (!labeledTrainingSet.isDataFeatureScaled() && linearRegressionAlgorithm.isFeatureScaledDataRequired())
+		{
+			throw new IllegalStateException("This regression algorithm requires " +
+					"that the data in the training set has been feature scaled");
+		}	
+		
+		hypothesisFunction = linearRegressionAlgorithm.train(labeledTrainingSet.getFeatureMatrix(), labelMapper.getLabelValues(labeledTrainingSet.getLabels()),trainingContext);
 	}
 
 	/**

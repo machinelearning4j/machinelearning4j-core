@@ -15,10 +15,12 @@
  */
 package org.machinelearning4j.algorithms;
 
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
-import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithmImpl;
+import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithmImpl;
+import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionTrainingContext;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -30,15 +32,6 @@ import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlg
  */
 public class DefaultAlgorithmFactory implements AlgorithmFactory {
 
-	/**
-	 * Create a linear regression algorithm, using the normal equation strategy
-	 * 
-	 * @param regularisationLambda The value of lambda to use for regularisation
-	 */
-	@Override
-	public LinearRegressionNormalEquationAlgorithm createLinearRegressionNormalEquationAlgorithm(double regularisationLambda) {
-		return new LinearRegressionNormalEquationAlgorithmImpl(regularisationLambda);
-	}
 
 	@Override
 	public KMeansClusteringAlgorithm createKMeansClusteringAlgorithm(
@@ -47,8 +40,22 @@ public class DefaultAlgorithmFactory implements AlgorithmFactory {
 	}
 
 	@Override
-	public LogisticRegressionAlgorithm createLogisticRegressionAlgorithm(double regularizationLambda) {
-		return new LogisticRegressionAlgorithmImpl(regularizationLambda);
+	public LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> createLogisticRegressionAlgorithm() {
+		return new LogisticRegressionAlgorithmImpl();
 	}
+
+	/**
+	 * Create a linear regression algorithm, using the normal equation strategy
+	 * 
+	 */
+	@Override
+	public LinearRegressionAlgorithm<LinearRegressionNormalEquationTrainingContext> createLinearRegressionNormalEquationAlgorithm() {
+		return new LinearRegressionNormalEquationAlgorithm();
+	}
+
+	
+	
+	
+
 
 }

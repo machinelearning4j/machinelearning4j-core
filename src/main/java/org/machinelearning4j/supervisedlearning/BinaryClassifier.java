@@ -24,19 +24,19 @@ import org.machinelearning4j.algorithms.supervisedlearning.NumericHypothesisFunc
  * 
  * @author Michael Lavelle
  */
-public class BinaryClassifier<T,C> implements LabelPredictor<T,ClassificationProbability<C>> {
+public class BinaryClassifier<T,L,C> implements LabelPredictor<T,ClassificationProbability<L>,C> {
 
-	private LabeledTrainingSet<T, C> labeledTrainingSet;
-	private LogisticRegressionAlgorithm logisticRegressionAlgorithm;
+	private LabeledTrainingSet<T, L> labeledTrainingSet;
+	private LogisticRegressionAlgorithm<C> logisticRegressionAlgorithm;
 	private NumericHypothesisFunction hypothesisFunction;
 	private double decisionBoundaryProbabilityThreshold = 0.5d;
-	private C negativeClass;
-	private C positiveClass;
-	private NumericLabelMapper<C> labelMapper;
+	private L negativeClass;
+	private L positiveClass;
+	private NumericLabelMapper<L> labelMapper;
 	
 	public BinaryClassifier(
-			LabeledTrainingSet<T, C> labeledTrainingSet,
-			LogisticRegressionAlgorithm logisticRegressionAlgorithm,NumericLabelMapper<C> labelMapper,C negativeClass,C positiveClass) {
+			LabeledTrainingSet<T, L> labeledTrainingSet,
+			LogisticRegressionAlgorithm<C> logisticRegressionAlgorithm,NumericLabelMapper<L> labelMapper,L negativeClass,L positiveClass) {
 			if (!labeledTrainingSet.isFeatureScalingConfigured())
 			{
 				throw new IllegalStateException("Logistic regression algorithm requires " +
@@ -50,7 +50,7 @@ public class BinaryClassifier<T,C> implements LabelPredictor<T,ClassificationPro
 	}
 
 	@Override
-	public void train() {
+	public void train(C trainingContext) {
 		
 		double[][] featureMatrix = labeledTrainingSet.getFeatureMatrix();
 		
@@ -60,11 +60,11 @@ public class BinaryClassifier<T,C> implements LabelPredictor<T,ClassificationPro
 					"that the data in the training set has been feature scaled");
 		}	
 		
-		hypothesisFunction = logisticRegressionAlgorithm.train(featureMatrix, labelMapper.getLabelValues(labeledTrainingSet.getLabels()));
+		hypothesisFunction = logisticRegressionAlgorithm.train(featureMatrix, labelMapper.getLabelValues(labeledTrainingSet.getLabels()),trainingContext);
 	}
 
 	@Override
-	public ClassificationProbability<C> predictLabel(T element) {
+	public ClassificationProbability<L> predictLabel(T element) {
 
 		double[] featureValues = labeledTrainingSet.getFeatureMapper().getFeatureValues(element);
 		if (labeledTrainingSet.isFeatureScalingConfigured() && labeledTrainingSet.isDataFeatureScaled())
@@ -85,11 +85,11 @@ public class BinaryClassifier<T,C> implements LabelPredictor<T,ClassificationPro
 		{
 			if (positiveClassProbability.doubleValue() >= decisionBoundaryProbabilityThreshold)
 			{
-				return new ClassificationProbability<C>(positiveClass,positiveClassProbability.doubleValue());
+				return new ClassificationProbability<L>(positiveClass,positiveClassProbability.doubleValue());
 			}
 			else
 			{
-				return new ClassificationProbability<C>(negativeClass,1d - positiveClassProbability.doubleValue());
+				return new ClassificationProbability<L>(negativeClass,1d - positiveClassProbability.doubleValue());
 			}
 		}
 	}
