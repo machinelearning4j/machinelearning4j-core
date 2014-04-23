@@ -15,16 +15,18 @@
  */
 package org.machinelearning4j.supervisedlearning;
 
+import java.util.Arrays;
+
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.NumericHypothesisFunction;
 /**
- * Classifying LabelPredictor - predicts a classification of type T (where there are exactly
+ * Classifying LabelPredictor - predicts a classification of type L (where there are exactly
  * two exclusive values the classification can take ) with an associated
  * prediction probability
  * 
  * @author Michael Lavelle
  */
-public class BinaryClassifier<T,L,C> implements LabelPredictor<T,ClassificationProbability<L>,C> {
+public class BinaryClassifier<T,L,C> implements Classifier<T,L,C> {
 
 	private LabeledTrainingSet<T, L> labeledTrainingSet;
 	private LogisticRegressionAlgorithm<C> logisticRegressionAlgorithm;
@@ -62,20 +64,9 @@ public class BinaryClassifier<T,L,C> implements LabelPredictor<T,ClassificationP
 		
 		hypothesisFunction = logisticRegressionAlgorithm.train(featureMatrix, labelMapper.getLabelValues(labeledTrainingSet.getLabels()),trainingContext);
 	}
-
-	@Override
-	public ClassificationProbability<L> predictLabel(T element) {
-
-		double[] featureValues = labeledTrainingSet.getFeatureMapper().getFeatureValues(element);
-		if (labeledTrainingSet.isFeatureScalingConfigured() && labeledTrainingSet.isDataFeatureScaled())
-		{
-			featureValues = labeledTrainingSet.getFeatureScaler().scaleFeatures(labeledTrainingSet, featureValues,true);
-		}
-		String featureValuesString = "";
-		for (double featureValue : featureValues)
-		{
-			featureValuesString = featureValuesString + "," + featureValue;
-		}
+	
+	protected ClassificationProbability<L> predictLabel(double[] featureValues)
+	{
 		Double positiveClassProbability = logisticRegressionAlgorithm.predictLabel(featureValues , hypothesisFunction);
 		if (positiveClassProbability == null)
 		{
@@ -93,12 +84,41 @@ public class BinaryClassifier<T,L,C> implements LabelPredictor<T,ClassificationP
 			}
 		}
 	}
+	
+	@Override
+	public ClassificationProbability<L> predictLabel(T element) {
+
+		double[] featureValues = labeledTrainingSet.getFeatureMapper().getFeatureValues(element);
+		if (labeledTrainingSet.isFeatureScalingConfigured() && labeledTrainingSet.isDataFeatureScaled())
+		{
+			featureValues = labeledTrainingSet.getFeatureScaler().scaleFeatures(labeledTrainingSet, featureValues,true);
+		}
+		return predictLabel(featureValues);
+		
+	}
 
 	public void setDecisionBoundaryProbabilityThreshold(
 			double decisionBoundaryProbabilityThreshold) {
 		this.decisionBoundaryProbabilityThreshold = decisionBoundaryProbabilityThreshold;
 	}
 	
-	
+	public double getTrainingSetPredictionAccuracyPercentage()
+	{
+		double predictedCorrect = 0;
+		double[] actualLabelValues = labelMapper.getLabelValues(labeledTrainingSet.getLabels());
+		int trainingExampleIndex = 0;
+		for (double[] elementFeatures :labeledTrainingSet.getFeatureMatrix())
+		{
+			ClassificationProbability<L> prediction = predictLabel(elementFeatures);
+			double actualLabelValue = actualLabelValues[trainingExampleIndex++];
+			@SuppressWarnings("unchecked")
+			double predictedLabelValue = labelMapper.getLabelValues(Arrays.asList(prediction.getClassification()))[0];
+			if (predictedLabelValue == actualLabelValue)
+			{
+				predictedCorrect++;
+			}
+		}
+		return 100 * predictedCorrect/labeledTrainingSet.getFeatureMatrix().length;
+	}
 
 }

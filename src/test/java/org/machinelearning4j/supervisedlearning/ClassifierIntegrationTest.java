@@ -86,8 +86,8 @@ public class ClassifierIntegrationTest {
 		LogisticRegressionAlgorithm<GradientDescentAlgorithmTrainingContext> logisticRegressionAlgorithm = 
 				algorithmFactory.createLogisticRegressionAlgorithm();
 		
-		// 3. Create an admission status (classification label) predictor for the training set, using this algorithm
-		LabelPredictor<Application,ClassificationProbability<AdmissionStatus>,GradientDescentAlgorithmTrainingContext> admissionStatusPredictor = 
+		// 3. Create an admission status label predictor (classifier) for the training set, using this algorithm
+		Classifier<Application,AdmissionStatus,GradientDescentAlgorithmTrainingContext> admissionStatusPredictor = 
 				new BinaryClassifier<Application,AdmissionStatus,GradientDescentAlgorithmTrainingContext>(labeledTrainingSet,logisticRegressionAlgorithm,new AdmissionStatusLabelMapper(),AdmissionStatus.NOT_ACCEPTED,AdmissionStatus.ACCEPTED);
 
 		// 4. Add our previous applications data to the training set
@@ -137,6 +137,9 @@ public class ClassifierIntegrationTest {
 		// probability as predicted by the Octave programming assigment from Stanford's Machine Learning course
 		BigDecimal classificationProbabiliyValue = new BigDecimal(predicitedAdmissionStatus.getProbability(),new MathContext(3));
 		Assert.assertEquals("0.776",classificationProbabiliyValue.toString());
+		
+		
+		Assert.assertEquals(89d, admissionStatusPredictor.getTrainingSetPredictionAccuracyPercentage());
 
 	}
 	
