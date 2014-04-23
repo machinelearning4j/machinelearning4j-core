@@ -48,7 +48,7 @@ public class LogisticRegressionBatchGradientDescentAlgorithmImpl implements
 	public NumericHypothesisFunction train(double[][] featureMatrix,
 			double[] labelVector,
 			GradientDescentAlgorithmTrainingContext trainingContext) {
-		LogisticRegressionHypothesisFunction hypothesisFunction = getInitialHypothesisFunction(featureMatrix[0].length);
+		LogisticRegressionHypothesisFunction hypothesisFunction = getInitialHypothesisFunction(featureMatrix[0].length,trainingContext.getRegularizationLambda());
 		boolean snapshotTakenOfLastIteration = false;
 		
 		if (trainingContext.getLearningRateAlpha() == null)
@@ -96,37 +96,39 @@ public class LogisticRegressionBatchGradientDescentAlgorithmImpl implements
 
 		double[] newThetas = new double[hypothesisFunction.thetas.length];
 		double[] gradients = getGradients(newThetas.length, featureMatrix,
-				labelVector, hypothesisFunction);
+				labelVector, hypothesisFunction,trainingContext.getRegularizationLambda());
 		for (int j = 0; j < newThetas.length; j++) {
 			newThetas[j] = hypothesisFunction.thetas[j]
 					- trainingContext.getLearningRateAlpha() * gradients[j];
 		}
 
-		return new LogisticRegressionHypothesisFunction(newThetas);
+		return new LogisticRegressionHypothesisFunction(newThetas,hypothesisFunction.regularizationLambda);
 	}
 
 	private double[] getGradients(int thetaCount, double[][] featureMatrix,
 			double[] labelVector,
-			LogisticRegressionHypothesisFunction hypothesisFunction) {
+			LogisticRegressionHypothesisFunction hypothesisFunction,double regularizationLambda) {
 		double[] gradients = new double[thetaCount];
 		for (int j = 0; j < thetaCount; j++) {
 			double m = featureMatrix.length;
-			double s = 0;
+			double sum = 0;
 			for (int i = 0; i < m; i++) {
-				double t = (hypothesisFunction.predict(featureMatrix[i]) - labelVector[i])
+				double increment = (hypothesisFunction.predict(featureMatrix[i]) - labelVector[i])
 						* featureMatrix[i][j];
-				s = s + t;
+				sum = sum + increment;
 			}
-			double grad = s / m;
+			double regularizationTerm = 0d;
+			if (j > 0 && regularizationLambda > 0 ) regularizationTerm = regularizationLambda * hypothesisFunction.thetas[j];
+			double grad = (sum + regularizationTerm) / m;
 			gradients[j] = grad;
 		}
 		return gradients;
 	}
 
 	protected LogisticRegressionHypothesisFunction getInitialHypothesisFunction(
-			int thetaCount) {
+			int thetaCount,double regularizationLambda) {
 		double[] initialThetas = new double[thetaCount];
-		return new LogisticRegressionHypothesisFunction(initialThetas);
+		return new LogisticRegressionHypothesisFunction(initialThetas,regularizationLambda);
 	}
 
 	@Override

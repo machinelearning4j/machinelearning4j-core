@@ -31,7 +31,17 @@ public class LogisticRegressionCostFunction implements CostFunction<double[],Dou
 			cost = cost - labels[i].doubleValue() * Math.log(h.predict(features[i]))
 			- (1d - labels[i].doubleValue()) * Math.log(1 - h.predict(features[i]));
 		}
-		cost = cost/trainingExamples;
+		double regularizationTerm = 0d;
+		if (h.getRegularizationLambda() > 0)
+		{
+			double sumOfThetaSquares = 0d;
+			for (int j = 0 ; j < h.thetas.length; j++)
+			{
+				sumOfThetaSquares = sumOfThetaSquares+ h.thetas[j] * h.thetas[j];
+			}
+			regularizationTerm =  h.getRegularizationLambda()/2d + sumOfThetaSquares;
+		}
+		cost = (cost + regularizationTerm)/trainingExamples;
 		return cost;
 	}
 
