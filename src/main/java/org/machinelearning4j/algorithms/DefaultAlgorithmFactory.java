@@ -15,12 +15,12 @@
  */
 package org.machinelearning4j.algorithms;
 
+import org.machinelearning4j.algorithms.supervisedlearning.GradientDescentAlgorithmTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
-import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithmImpl;
-import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionTrainingContext;
+import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionBatchGradientDescentAlgorithmImpl;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -40,8 +40,8 @@ public class DefaultAlgorithmFactory implements AlgorithmFactory {
 	}
 
 	@Override
-	public LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> createLogisticRegressionAlgorithm() {
-		return new LogisticRegressionAlgorithmImpl();
+	public LogisticRegressionAlgorithm<GradientDescentAlgorithmTrainingContext> createLogisticRegressionAlgorithm() {
+		return new LogisticRegressionBatchGradientDescentAlgorithmImpl();
 	}
 
 	/**

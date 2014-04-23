@@ -15,10 +15,10 @@
  */
 package org.machinelearning4j.algorithms;
 
+import org.machinelearning4j.algorithms.supervisedlearning.GradientDescentAlgorithmTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
-import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionTrainingContext;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -47,6 +47,6 @@ public interface AlgorithmFactory {
 	 * Create a LogisticRegressionAlgorithm
 	 * 
 	 */
-	<C extends LogisticRegressionTrainingContext> LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> createLogisticRegressionAlgorithm();
+	<C extends GradientDescentAlgorithmTrainingContext> LogisticRegressionAlgorithm<C> createLogisticRegressionAlgorithm();
 
 }

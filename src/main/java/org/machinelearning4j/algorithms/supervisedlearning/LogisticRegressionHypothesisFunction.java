@@ -27,7 +27,7 @@ package org.machinelearning4j.algorithms.supervisedlearning;
  */
 public class LogisticRegressionHypothesisFunction implements NumericHypothesisFunction {
 
-	private double[] thetas;
+	protected double[] thetas;
 
 	public LogisticRegressionHypothesisFunction(double[] thetas)
 	{

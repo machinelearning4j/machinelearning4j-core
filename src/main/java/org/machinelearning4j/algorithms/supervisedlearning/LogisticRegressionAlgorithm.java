@@ -16,7 +16,7 @@
 package org.machinelearning4j.algorithms.supervisedlearning;
 
 /**
- *  A logistic regression algorithm
+ *  Identifies a regression algorithm as a logistic regression algorithm
  * 
  * @author Michael Lavelle
  */

@@ -13,34 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.machinelearning4j.algorithms.supervisedlearning;
+package org.machinelearning4j.algorithms;
+
 /**
- *  Training context for a logistic regression algorithm
+ * Defines ConvergenceCriteria for an algorithm using runtime information encapsulated within training context of type C
  * 
  * @author Michael Lavelle
  */
-public class LogisticRegressionTrainingContext {
+public interface ConvergenceCriteria<C> {
 
-	private double regularizationLambda;
+	boolean isPrerequisiteConditionViolated(C trainingContext);
+
+	boolean isConvergenceCompleteConditionSatisfied(C trainingContext);
 	
-	private Double learningRateAlpha;
-
-	public double getLearningRateAlpha() {
-		return learningRateAlpha;
-	}
-
-	public void setLearningRateAlpha(Double learningRateAlpha) {
-		this.learningRateAlpha = learningRateAlpha;
-	}
-
-	public double getRegularizationLambda() {
-		return regularizationLambda;
-	}
-
-	public void setRegularizationLambda(Double regularizationLambda) {
-		this.regularizationLambda = regularizationLambda;
-	}
-	
-	
-
 }

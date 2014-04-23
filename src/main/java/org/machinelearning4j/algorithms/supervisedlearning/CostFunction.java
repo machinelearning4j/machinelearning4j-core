@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
+
+
 /**
- *  Identifies a regression algorithm as a linear regression algorithm
  * 
+ * @param <X> the type of an input data element which contains the set of independent attributes
+ * @param <Y> the type of the dependent output or target data attribute, which the associated hypothesis function predicts, given an element of X 
+ * @param <H> the type of the hypothesis function used to predict Y from X 
+
  * @author Michael Lavelle
+ * 
+ * A CostFunction<X,Y,H> calculates a cost associated with training prediction errors using a given HypothesisFunction mapping elements of 
+ * type X to type Y.
  */
-public interface LinearRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
+public interface CostFunction<X,Y,H extends HypothesisFunction<X,Y>> {
+
+	public double getCost(H h,X[] x,Y[] y);
 }

@@ -15,33 +15,25 @@
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
 
+import org.machinelearning4j.algorithms.ConvergenceCriteria;
 /**
- *  A logistic regression algorithm implementation
+ * Defines ConvergenceCriteria using runtime information encapsulated within GradientDescentAlgorithmTrainingContext
  * 
  * @author Michael Lavelle
  */
-public class LogisticRegressionAlgorithmImpl implements LogisticRegressionAlgorithm<LogisticRegressionTrainingContext> {
-
-	public LogisticRegressionAlgorithmImpl() {
+public abstract class CostFunctionSnapshotConvergenceCriteria<C extends GradientDescentAlgorithmTrainingContext> implements
+		ConvergenceCriteria<C> {
+	
+	private int snapshotItervalInIterations;
+	
+	public CostFunctionSnapshotConvergenceCriteria(int snapshotItervalInIterations)
+	{
+		this.snapshotItervalInIterations = snapshotItervalInIterations;
+	}
+	
+	public int getCostFunctionSnapshotItervalInIterations() {
+		return snapshotItervalInIterations;
 	}
 
-	@Override
-	public NumericHypothesisFunction train(double[][] featureMatrix,
-			double[] labelVector,LogisticRegressionTrainingContext trainingContext) {
-		// TODO
-		return null;
-	}
-
-	@Override
-	public Double predictLabel(double[] featureVector,
-			NumericHypothesisFunction hypothesisFunction) {
-		// TODO
-		return null;
-	}
-
-	@Override
-	public boolean isFeatureScaledDataRequired() {
-		return true;
-	}
 
 }

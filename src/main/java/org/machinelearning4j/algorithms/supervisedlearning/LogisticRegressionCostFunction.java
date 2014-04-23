@@ -14,10 +14,27 @@
  * limitations under the License.
  */
 package org.machinelearning4j.algorithms.supervisedlearning;
+
 /**
- *  Identifies a regression algorithm as a linear regression algorithm
+ * Defines logistic regression cost function
  * 
  * @author Michael Lavelle
  */
-public interface LinearRegressionAlgorithm<C> extends RegressionAlgorithm<C> {
+public class LogisticRegressionCostFunction implements CostFunction<double[],Double,LogisticRegressionHypothesisFunction> {
+
+	@Override
+	public double getCost(LogisticRegressionHypothesisFunction h, double[][] features,Double[] labels) {		
+		int trainingExamples = features.length;
+		double cost = 0d;
+		for (int i = 0; i < trainingExamples; i++)
+		{
+			cost = cost - labels[i].doubleValue() * Math.log(h.predict(features[i]))
+			- (1d - labels[i].doubleValue()) * Math.log(1 - h.predict(features[i]));
+		}
+		cost = cost/trainingExamples;
+		return cost;
+	}
+
+	
+
 }
