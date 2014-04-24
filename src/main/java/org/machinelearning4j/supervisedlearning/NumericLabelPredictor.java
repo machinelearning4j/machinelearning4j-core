@@ -73,7 +73,12 @@ public class NumericLabelPredictor<T,L,C> implements
 	 */
 	@Override
 	public Number predictLabel(T element) {
-		return linearRegressionAlgorithm.predictLabel(labeledTrainingSet.getFeatureMapper().getFeatureValues(element), hypothesisFunction);
+		double[] featureValues = labeledTrainingSet.getFeatureMapper().getFeatureValues(element);
+		if (labeledTrainingSet.isFeatureScalingConfigured() && labeledTrainingSet.isDataFeatureScaled())
+		{
+			featureValues = labeledTrainingSet.getFeatureScaler().scaleFeatures(labeledTrainingSet, featureValues,true);
+		}
+		return linearRegressionAlgorithm.predictLabel(featureValues, hypothesisFunction);
 	}
 
 }
