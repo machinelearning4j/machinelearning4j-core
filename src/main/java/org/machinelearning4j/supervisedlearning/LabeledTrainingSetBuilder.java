@@ -29,6 +29,10 @@ public class LabeledTrainingSetBuilder<T,L> extends AbstractTrainingSetBuilder<T
 	public LabeledTrainingSetBuilder(int size) {
 		super(size,true);
 	}
+	
+	public LabeledTrainingSetBuilder(int size,boolean addInterceptFeature) {
+		super(size,addInterceptFeature);
+	}
 
 	private LabelDefinition<T,L> labelDefinition;
 	

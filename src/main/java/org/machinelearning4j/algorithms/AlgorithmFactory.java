@@ -19,6 +19,8 @@ import org.machinelearning4j.algorithms.supervisedlearning.GradientDescentAlgori
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.NeuralNetworkAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.NeuralNetworkAlgorithmTrainingContext;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -48,5 +50,7 @@ public interface AlgorithmFactory {
 	 * 
 	 */
 	<C extends GradientDescentAlgorithmTrainingContext> LogisticRegressionAlgorithm<C> createLogisticRegressionAlgorithm();
+
+	<C extends NeuralNetworkAlgorithmTrainingContext> NeuralNetworkAlgorithm<C> createNeuralNetworkAlgorithm();
 
 }

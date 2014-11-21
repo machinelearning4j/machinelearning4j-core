@@ -30,6 +30,11 @@ public class Builders {
 		return new LabeledTrainingSetBuilder<T,L>(numberOfTrainingExamplesToProcess);
 	}
 	
+	public static <T,L> LabeledTrainingSetBuilder<T,L> createLabeledTrainingSetBuilder(Class<T> elementClass,
+			Class<L> labelClass, int numberOfTrainingExamplesToProcess,boolean addInterceptFeature) {
+		return new LabeledTrainingSetBuilder<T,L>(numberOfTrainingExamplesToProcess,addInterceptFeature);
+	}
+	
 	public static <T,L> UnlabeledTrainingSetBuilder<T> createUnlabeledTrainingSetBuilder(Class<T> elementClass, int numberOfTrainingExamplesToProcess) {
 		return new UnlabeledTrainingSetBuilder<T>(numberOfTrainingExamplesToProcess);
 	}

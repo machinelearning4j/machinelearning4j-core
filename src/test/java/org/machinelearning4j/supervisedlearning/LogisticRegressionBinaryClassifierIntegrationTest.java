@@ -42,7 +42,7 @@ import org.machinelearning4j.util.TrainingSetDataSource;
  * 
  * @author Michael Lavelle
  */
-public class ClassifierIntegrationTest {
+public class LogisticRegressionBinaryClassifierIntegrationTest {
 
 	private Iterable<Application> previousApplications;
 	private int trainingSetSize;
@@ -145,8 +145,8 @@ public class ClassifierIntegrationTest {
 	
 	private Collection<Application> getPreviousApplicationDataFromFile(String fileName)
 	{
-		TrainingSetDataSource<Application,Collection<Application>> houses = new CsvFileClassloaderDataSource<Application>(fileName,getClass().getClassLoader(),new PreviousApplicationCsvDataExtractor());
-		return houses.getData();
+		TrainingSetDataSource<Application,Collection<Application>> applicationsSource = new CsvFileClassloaderDataSource<Application>(fileName,getClass().getClassLoader(),new PreviousApplicationCsvDataExtractor());
+		return applicationsSource.getData();
 	}
 	
 }

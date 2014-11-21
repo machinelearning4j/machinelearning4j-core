@@ -21,6 +21,9 @@ import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNorma
 import org.machinelearning4j.algorithms.supervisedlearning.LinearRegressionNormalEquationTrainingContext;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionAlgorithm;
 import org.machinelearning4j.algorithms.supervisedlearning.LogisticRegressionBatchGradientDescentAlgorithmImpl;
+import org.machinelearning4j.algorithms.supervisedlearning.NeuralNetworkAlgorithm;
+import org.machinelearning4j.algorithms.supervisedlearning.NeuralNetworkAlgorithmImpl;
+import org.machinelearning4j.algorithms.supervisedlearning.NeuralNetworkAlgorithmTrainingContext;
 import org.machinelearning4j.algorithms.unsupervisedlearning.KMeansClusteringAlgorithm;
 
 
@@ -54,7 +57,10 @@ public class DefaultAlgorithmFactory implements AlgorithmFactory {
 	}
 
 	
-	
+	@Override
+	public NeuralNetworkAlgorithm<NeuralNetworkAlgorithmTrainingContext> createNeuralNetworkAlgorithm() {
+		return new NeuralNetworkAlgorithmImpl();
+	}
 	
 
 
