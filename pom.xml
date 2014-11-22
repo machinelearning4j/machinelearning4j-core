@@ -11,6 +11,13 @@
 	<distributionManagement>
 	</distributionManagement>
 	<repositories>
+		<repository>
+			<id>opensourceagility-snapshots</id>
+			<url>http://repo.opensourceagility.com/snapshots</url>
+		<snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
