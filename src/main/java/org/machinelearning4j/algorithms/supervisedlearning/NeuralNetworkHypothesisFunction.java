@@ -14,6 +14,10 @@ public class NeuralNetworkHypothesisFunction implements
 	}
 
 	
+	public NeuralNetwork getNeuralNetwork() {
+		return neuralNetwork;
+	}
+
 	@Override
 	public double[] predict(double[] numericFeatures) {
 		return neuralNetwork.predictFP(new DoubleMatrix(new double[][] {numericFeatures})).toArray();
